@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="About Joya Atelier, an event planning, decor, styling, and floral studio creating beautiful moments through flowers, spaces, and thoughtful details.">
     <title>About Joya Atelier | Events, Decor & Florals</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -12,12 +13,13 @@
 <body>
     <header class="shop-header">
         <a class="brand shop-brand" href="{{ route('home') }}" aria-label="Joya Atelier home">
-            <img class="brand-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="brand-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
         </a>
         <nav class="shop-nav" aria-label="About page navigation">
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('events') }}">Events</a>
             <a href="{{ route('flowers') }}">Flowers</a>
+            <a href="{{ route('shop') }}">Shop</a>
             <a href="#story">Our Story</a>
             <a href="#services">What We Do</a>
             <a href="#process">How We Work</a>
@@ -110,7 +112,7 @@
                     <p>Fresh arrangements, bouquets, flower boxes, centerpieces, wedding flowers, and floral gifts.</p>
                 </article>
                 <article>
-                    <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=700&q=85" alt="Luxury table decor and seating styling">
+                    <img src="{{ asset('images/events/pretty-table-styling.jpg') }}" alt="Styled event tables with seating, centerpieces, linens, and place settings">
                     <span>04</span>
                     <h3>Table & Venue Styling</h3>
                     <p>Styled tables, seating arrangements, centerpieces, linens, and decorative finishing touches.</p>
@@ -159,7 +161,7 @@
                 <h2>It is about creating an atmosphere.</h2>
             </div>
             <div>
-                <img src="{{ asset('images/ribbon/sunflower-ribbon-mix.jpg') }}" alt="Sunflower ribbon flower bouquet" class="about-inline-image">
+                <img src="{{ asset('images/events/joya-hero-better-together.png') }}" alt="Elegant event atmosphere with styled tables, flowers, candles, balloons, and a glowing backdrop" class="about-inline-image">
                 <p>
                     Event styling is not simply about balloons, flowers, or beautiful backdrops.
                     It is the feeling of walking into a space and seeing your vision come to life.
@@ -180,11 +182,26 @@
                 <h2>Beauty is found in the details.</h2>
             </div>
             <div class="philosophy-list">
-                <p>A carefully chosen flower.</p>
-                <p>A beautifully styled table.</p>
-                <p>The perfect combination of colors.</p>
-                <p>A backdrop that becomes the centre of every photograph.</p>
-                <p>A small personal touch that makes the celebration uniquely yours.</p>
+                <article>
+                    <img src="{{ asset('images/flowers/pink-fuzzy-roses.jpg') }}" alt="Carefully chosen pink flower arrangement">
+                    <p>A carefully chosen flower.</p>
+                </article>
+                <article>
+                    <img src="{{ asset('images/events/pretty-table-styling.jpg') }}" alt="Beautifully styled event table with white and gold place settings">
+                    <p>A beautifully styled table.</p>
+                </article>
+                <article>
+                    <img src="{{ asset('images/events/baby-shower-pink-gold.jpg') }}" alt="Pink and gold event decor color palette">
+                    <p>The perfect combination of colors.</p>
+                </article>
+                <article>
+                    <img src="{{ asset('images/events/black-pink-backdrop.jpg') }}" alt="Decorated event backdrop for photographs">
+                    <p>A backdrop that becomes the centre of every photograph.</p>
+                </article>
+                <article>
+                    <img src="{{ asset('images/events/valentine-surprise.avif') }}" alt="Personal celebration setup with thoughtful details">
+                    <p>A small personal touch that makes the celebration uniquely yours.</p>
+                </article>
             </div>
             <p class="about-closing">
                 We approach every celebration with creativity, care, attention to detail, and a genuine
@@ -206,7 +223,7 @@
 
     <footer class="site-footer">
         <div>
-            <img class="footer-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="footer-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
             <p>EVENTS &bull; DECOR &bull; FLORALS</p>
         </div>
         <div>
@@ -216,7 +233,7 @@
             <p>Location: Nairobi, Kenya</p>
         </div>
         <div>
-            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('booking') }}">Booking</a></p>
+            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('shop') }}">Shop</a> | <a href="{{ route('booking') }}">Booking</a></p>
             <p>Instagram | TikTok | Facebook</p>
         </div>
     </footer>

@@ -1,0 +1,413 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+@source '../../../../vendor/filament/**/*';
+
+:root {
+    --joya-ink: #211815;
+    --joya-muted: #6f5f57;
+    --joya-paper: #f7efe8;
+    --joya-card: #fffaf6;
+    --joya-field: #fffdfb;
+    --joya-blush: #ead1c8;
+    --joya-champagne: #efe0ce;
+    --joya-terracotta: #a95f4c;
+    --joya-cocoa: #4a2b24;
+    --joya-line: rgba(45, 36, 32, 0.14);
+}
+
+.dark,
+.fi-body,
+.fi-main,
+.fi-page,
+.fi-page-content {
+    color-scheme: light !important;
+}
+
+.fi-body {
+    background: var(--joya-paper) !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-sidebar,
+.fi-topbar,
+.fi-sidebar-header {
+    background: #fffaf6 !important;
+    border-color: var(--joya-line) !important;
+}
+
+.fi-logo {
+    color: var(--joya-ink) !important;
+    font-weight: 800;
+}
+
+.fi-sidebar-nav {
+    background: #fffaf6 !important;
+}
+
+.fi-sidebar-item a,
+.fi-sidebar-group-label,
+.fi-sidebar-item-label,
+.fi-sidebar-item-icon {
+    color: var(--joya-muted) !important;
+}
+
+.fi-sidebar-item-active a,
+.fi-sidebar-item a:hover {
+    background: var(--joya-blush) !important;
+    color: #7D3C31 !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label,
+.fi-sidebar-item-active .fi-sidebar-item-icon,
+.fi-sidebar-item a:hover .fi-sidebar-item-label,
+.fi-sidebar-item a:hover .fi-sidebar-item-icon {
+    color: #7D3C31 !important;
+}
+
+.fi-main,
+.fi-page,
+.fi-page-content {
+    background: var(--joya-paper) !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-header-heading,
+.fi-header-subheading,
+.fi-section-header-heading,
+.fi-breadcrumbs,
+.fi-breadcrumbs *,
+.fi-page-sub-navigation,
+.fi-page-sub-navigation * {
+    color: var(--joya-ink) !important;
+}
+
+.fi-section,
+.fi-ta,
+.fi-fo-field-wrp,
+.fi-in-entry-wrp,
+.fi-wi-widget,
+.fi-modal-window {
+    border-color: var(--joya-line) !important;
+}
+
+.fi-section,
+.fi-ta-ctn,
+.fi-modal-window,
+.fi-dropdown-panel,
+.fi-fo-repeater-item,
+.fi-fo-builder-item {
+    background: var(--joya-card) !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-section *,
+.fi-fo-field-wrp *,
+.fi-in-entry-wrp *,
+.fi-modal-window *,
+.fi-dropdown-panel * {
+    color: var(--joya-ink) !important;
+}
+
+.fi-fo-field-wrp-label,
+.fi-fo-field-wrp-label span,
+.fi-fo-field-wrp-label label,
+.fi-fo-field-wrp-helper-text,
+.fi-fo-field-wrp-error-message,
+.fi-fo-field-wrp-hint,
+.fi-fo-field-wrp-hint *,
+.fi-fieldset legend,
+.fi-fieldset legend *,
+.fi-section-header-description,
+.fi-section-header-description *,
+.fi-placeholder,
+.fi-placeholder * {
+    color: var(--joya-muted) !important;
+}
+
+.fi-fo-field-wrp-label,
+.fi-fo-field-wrp-label span,
+.fi-fo-field-wrp-label label,
+.fi-fieldset legend {
+    color: var(--joya-cocoa) !important;
+    font-weight: 700 !important;
+}
+
+.fi-btn-color-primary {
+    background: var(--joya-terracotta) !important;
+    color: white !important;
+}
+
+.fi-btn-color-primary:hover {
+    background: #9B4F3F !important;
+}
+
+.fi-input,
+.fi-select-input,
+.fi-textarea,
+.fi-fo-rich-editor,
+.fi-fo-rich-editor .tiptap,
+.fi-input-wrp,
+.fi-select,
+.fi-date-time-picker {
+    background: var(--joya-field) !important;
+    border-color: rgba(45, 36, 32, 0.18) !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-input::placeholder,
+.fi-textarea::placeholder {
+    color: #9a8a81 !important;
+    opacity: 1 !important;
+}
+
+.fi-select-input option {
+    background: #fffdfb !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-input:focus,
+.fi-select-input:focus,
+.fi-textarea:focus {
+    border-color: var(--joya-terracotta) !important;
+    box-shadow: 0 0 0 1px var(--joya-terracotta) !important;
+}
+
+.fi-ta-header,
+.fi-ta-row:hover,
+.fi-ta-content,
+.fi-ta-table thead {
+    background: #fffaf6 !important;
+}
+
+.fi-ta,
+.fi-ta *,
+.fi-ta-header,
+.fi-ta-header *,
+.fi-ta-content,
+.fi-ta-content *,
+.fi-ta-table,
+.fi-ta-table *,
+.fi-pagination,
+.fi-pagination * {
+    color: var(--joya-ink) !important;
+}
+
+.fi-ta-table thead,
+.fi-ta-table thead tr,
+.fi-ta-table thead th {
+    background: #f6eee7 !important;
+}
+
+.fi-ta-table th,
+.fi-ta-table th *,
+.fi-ta-table thead button,
+.fi-ta-table thead span {
+    color: #6d3329 !important;
+    font-weight: 800 !important;
+}
+
+.fi-ta-table tbody tr,
+.fi-ta-table tbody td {
+    background: #fffdfb !important;
+    color: var(--joya-ink) !important;
+}
+
+.fi-ta-table tbody tr:hover,
+.fi-ta-table tbody tr:hover td {
+    background: #fbf1eb !important;
+}
+
+.fi-ta-text,
+.fi-ta-text *,
+.fi-ta-col,
+.fi-ta-col *,
+.fi-ta-cell,
+.fi-ta-cell *,
+.fi-ta-record,
+.fi-ta-record * {
+    color: var(--joya-ink) !important;
+}
+
+.fi-ta .fi-input,
+.fi-ta .fi-select-input,
+.fi-ta-search-field .fi-input,
+.fi-ta-filter .fi-input,
+.fi-ta-filter .fi-select-input {
+    background: #fffaf6 !important;
+    color: var(--joya-ink) !important;
+    border-color: rgba(45, 36, 32, 0.2) !important;
+}
+
+.fi-ta .fi-input::placeholder {
+    color: #867972 !important;
+    opacity: 1 !important;
+}
+
+.fi-checkbox-input {
+    background-color: #fffaf6 !important;
+    border-color: rgba(45, 36, 32, 0.24) !important;
+}
+
+.fi-checkbox-input:checked {
+    background-color: var(--joya-terracotta) !important;
+}
+
+.fi-ac,
+.fi-ac *,
+.fi-btn,
+.fi-btn * {
+    color: var(--joya-cocoa) !important;
+}
+
+.fi-btn-color-primary,
+.fi-btn-color-primary * {
+    color: #ffffff !important;
+}
+
+.fi-ta .fi-badge,
+.fi-ta .fi-badge * {
+    color: #7d3c31 !important;
+    border-color: #e5bdb3 !important;
+    background: #fff0eb !important;
+}
+
+.fi-ta .fi-icon-btn,
+.fi-ta .fi-icon-btn * {
+    color: #6d3329 !important;
+}
+
+.fi-ta-table th,
+.fi-ta-table td {
+    border-color: #f0e4dc !important;
+}
+
+.fi-badge {
+    border-radius: 999px !important;
+}
+
+body,
+body *,
+.fi-body,
+.fi-body *,
+.fi-main,
+.fi-main *,
+.fi-page,
+.fi-page *,
+.fi-section,
+.fi-section *,
+.fi-ta,
+.fi-ta *,
+.fi-fo-field-wrp,
+.fi-fo-field-wrp *,
+.fi-input,
+.fi-input *,
+.fi-select-input,
+.fi-select-input *,
+.fi-textarea,
+.fi-textarea *,
+.fi-dropdown-panel,
+.fi-dropdown-panel *,
+.fi-modal-window,
+.fi-modal-window *,
+.fi-sidebar,
+.fi-sidebar *,
+.fi-topbar,
+.fi-topbar *,
+.fi-breadcrumbs,
+.fi-breadcrumbs *,
+.fi-pagination,
+.fi-pagination * {
+    color: #000000 !important;
+}
+
+.fi-input::placeholder,
+.fi-textarea::placeholder {
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+.fi-btn-color-primary,
+.fi-btn-color-primary *,
+.fi-btn-color-danger,
+.fi-btn-color-danger * {
+    color: #ffffff !important;
+}
+
+.fi-badge,
+.fi-badge *,
+.fi-icon-btn,
+.fi-icon-btn *,
+.fi-link,
+.fi-link * {
+    color: #000000 !important;
+}
+
+.fi-simple-layout {
+    background: #f7efe8 !important;
+}
+
+.fi-simple-main,
+.fi-simple-main-ctn,
+.fi-simple-page {
+    background: #4a2b24 !important;
+    border-radius: 18px !important;
+}
+
+.fi-simple-main *,
+.fi-simple-main-ctn *,
+.fi-simple-page * {
+    color: #fffaf6 !important;
+}
+
+.fi-simple-main .fi-logo,
+.fi-simple-main-ctn .fi-logo,
+.fi-simple-page .fi-logo,
+.fi-simple-header-heading,
+.fi-simple-header-heading *,
+.fi-simple-header-subheading,
+.fi-simple-header-subheading * {
+    color: #fffaf6 !important;
+}
+
+.fi-simple-main .fi-fo-field-wrp-label,
+.fi-simple-main .fi-fo-field-wrp-label *,
+.fi-simple-main .fi-fo-field-wrp-helper-text,
+.fi-simple-main .fi-fo-field-wrp-helper-text *,
+.fi-simple-main .fi-fo-field-wrp-error-message,
+.fi-simple-main .fi-fo-field-wrp-error-message *,
+.fi-simple-main-ctn .fi-fo-field-wrp-label,
+.fi-simple-main-ctn .fi-fo-field-wrp-label *,
+.fi-simple-main-ctn .fi-fo-field-wrp-helper-text,
+.fi-simple-main-ctn .fi-fo-field-wrp-helper-text *,
+.fi-simple-main-ctn .fi-fo-field-wrp-error-message,
+.fi-simple-main-ctn .fi-fo-field-wrp-error-message * {
+    color: #fffaf6 !important;
+}
+
+.fi-simple-main .fi-input,
+.fi-simple-main .fi-input *,
+.fi-simple-main .fi-input-wrp,
+.fi-simple-main .fi-input-wrp *,
+.fi-simple-main-ctn .fi-input,
+.fi-simple-main-ctn .fi-input *,
+.fi-simple-main-ctn .fi-input-wrp,
+.fi-simple-main-ctn .fi-input-wrp * {
+    background: #fffaf6 !important;
+    color: #000000 !important;
+}
+
+.fi-simple-main .fi-checkbox-input,
+.fi-simple-main-ctn .fi-checkbox-input {
+    background: #fffaf6 !important;
+    border-color: #ead1c8 !important;
+}
+
+.fi-simple-main .fi-btn-color-primary,
+.fi-simple-main .fi-btn-color-primary *,
+.fi-simple-main-ctn .fi-btn-color-primary,
+.fi-simple-main-ctn .fi-btn-color-primary * {
+    background: #a95f4c !important;
+    color: #fffaf6 !important;
+}

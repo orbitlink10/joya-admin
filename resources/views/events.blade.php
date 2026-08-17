@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Explore event decor and styling services by Joya Atelier for weddings, birthdays, baby showers, bridal showers, graduations, corporate events, galas, anniversaries, and intimate gatherings.">
     <title>Events | Joya Atelier</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -12,12 +13,13 @@
 <body>
     <header class="shop-header">
         <a class="brand shop-brand" href="{{ route('home') }}" aria-label="Joya Atelier home">
-            <img class="brand-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="brand-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
         </a>
         <nav class="shop-nav" aria-label="Events page navigation">
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('flowers') }}">Flowers</a>
+            <a href="{{ route('shop') }}">Shop</a>
             <a href="#event-types">Event Types</a>
             <a href="{{ route('booking') }}">Booking</a>
         </nav>
@@ -38,13 +40,39 @@
             </div>
         </section>
 
+        @if ($services->isNotEmpty())
+            <section id="services" class="events-section">
+                <div class="section-heading">
+                    <p class="eyebrow dark">Services</p>
+                    <h2>Services managed from your admin dashboard.</h2>
+                </div>
+                <div class="events-grid">
+                    @foreach ($services as $service)
+                        <article data-gallery-group="{{ Str::slug($service->title) }}">
+                            @if ($service->image)
+                                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}">
+                            @else
+                                <img src="{{ asset('images/events/joya-event-setup-pink-gold.png') }}" alt="{{ $service->title }}">
+                            @endif
+                            <div>
+                                <span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                <h3>{{ $service->title }}</h3>
+                                <p>{{ $service->description }}</p>
+                                <a href="{{ route('booking') }}">Enquire About This</a>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         <section id="event-types" class="events-section">
             <div class="section-heading">
                 <p class="eyebrow dark">Event Types</p>
                 <h2>Tell us what you are celebrating.</h2>
             </div>
             <div class="events-grid">
-                <article>
+                <article data-gallery-group="weddings">
                     <img src="{{ asset('images/events/floral-wedding-aisle.jpg') }}" alt="Floral wedding aisle decor inspiration">
                     <div>
                         <span>01</span>
@@ -53,7 +81,7 @@
                         <a href="{{ route('booking') }}">Book Wedding Decor</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="birthdays">
                     <img src="{{ asset('images/events/black-bows-birthday.jpg') }}" alt="Black and silver birthday balloon setup inspiration">
                     <div>
                         <span>02</span>
@@ -62,7 +90,7 @@
                         <a href="{{ route('booking') }}">Plan a Birthday</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="bridal-showers">
                     <img src="{{ asset('images/events/bride-to-be-pink.jpg') }}" alt="Pink bride to be bridal shower balloon backdrop">
                     <div>
                         <span>03</span>
@@ -71,7 +99,7 @@
                         <a href="{{ route('booking') }}">Style a Bridal Shower</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="baby-showers">
                     <img src="{{ asset('images/events/baby-shower-pink-gold.jpg') }}" alt="Pink white and gold baby shower decor inspiration">
                     <div>
                         <span>04</span>
@@ -80,7 +108,7 @@
                         <a href="{{ route('booking') }}">Plan a Baby Shower</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="graduations">
                     <img src="{{ asset('images/events/bedroom-birthday-balloons.jpg') }}" alt="Bedroom balloon surprise inspiration">
                     <div>
                         <span>05</span>
@@ -89,7 +117,7 @@
                         <a href="{{ route('booking') }}">Style a Graduation</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="corporate-events">
                     <img src="{{ asset('images/events/wedding-candle-tablescape.jpeg') }}" alt="Elegant candlelit tablescape inspiration">
                     <div>
                         <span>06</span>
@@ -98,7 +126,7 @@
                         <a href="{{ route('booking') }}">Book Corporate Styling</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="galas-dinners">
                     <img src="{{ asset('images/events/wedding-lights-tablescape.jpg') }}" alt="Warm wedding lights and tablescape inspiration">
                     <div>
                         <span>07</span>
@@ -107,7 +135,7 @@
                         <a href="{{ route('booking') }}">Plan a Gala</a>
                     </div>
                 </article>
-                <article>
+                <article data-gallery-group="anniversaries">
                     <img src="{{ asset('images/events/romantic-love-setup.jpg') }}" alt="Romantic love and candle setup inspiration">
                     <div>
                         <span>08</span>
@@ -125,52 +153,71 @@
                 <h2>Ideas we can style around your moment.</h2>
             </div>
             <div class="event-inspo-grid">
-                <figure class="wide">
+                <figure class="wide" data-gallery-group="weddings">
                     <img src="{{ asset('images/events/wedding-lights-tablescape.jpg') }}" alt="Wedding table with flowers, candles, and string lights">
                     <figcaption>Warm wedding dinner styling</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="anniversaries">
                     <img src="{{ asset('images/events/romantic-love-setup.jpg') }}" alt="Romantic surprise setup with candles and rose petals">
                     <figcaption>Romantic surprise setup</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="birthdays">
                     <img src="{{ asset('images/events/black-bows-birthday.jpg') }}" alt="Black and silver birthday balloon wall">
                     <figcaption>Black bow birthday decor</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="bridal-showers">
                     <img src="{{ asset('images/events/bride-to-be-pink.jpg') }}" alt="Pink bride to be bridal shower backdrop">
                     <figcaption>Bridal shower backdrop</figcaption>
                 </figure>
-                <figure class="tall">
+                <figure class="tall" data-gallery-group="birthdays">
                     <img src="{{ asset('images/events/bedroom-birthday-balloons.jpg') }}" alt="Bedroom birthday balloon surprise">
                     <figcaption>Bedroom birthday surprise</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="baby-showers">
                     <img src="{{ asset('images/events/baby-shower-pink-gold.jpg') }}" alt="Pink and gold baby shower decor">
                     <figcaption>Baby shower styling</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="bridal-showers">
                     <img src="{{ asset('images/events/bridal-shower-neutral.webp') }}" alt="Neutral bridal shower Miss to Mrs backdrop">
                     <figcaption>Neutral Miss to Mrs setup</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="weddings">
                     <img src="{{ asset('images/events/floral-wedding-aisle.jpg') }}" alt="Floral wedding aisle with pink flowers">
                     <figcaption>Floral wedding aisle</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="weddings">
                     <img src="{{ asset('images/events/wedding-candle-tablescape.jpeg') }}" alt="Candlelit luxury wedding tablescape">
                     <figcaption>Candlelit tablescape</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="anniversaries">
                     <img src="{{ asset('images/events/valentine-surprise.avif') }}" alt="Valentine surprise decor inspiration">
                     <figcaption>Valentine surprise</figcaption>
                 </figure>
-                <figure>
+                <figure data-gallery-group="anniversaries">
                     <img src="{{ asset('images/events/surprise-setup.avif') }}" alt="Surprise event decor inspiration">
                     <figcaption>Custom surprise setup</figcaption>
                 </figure>
             </div>
         </section>
+
+        @if ($eventGalleryImages->isNotEmpty())
+            <section class="events-section inspiration-section">
+                <div class="section-heading">
+                    <p class="eyebrow dark">Real Event Gallery</p>
+                    <h2>Past setups added from the admin dashboard.</h2>
+                </div>
+                <div class="event-inspo-grid">
+                    @foreach ($eventGalleryImages as $eventType => $images)
+                        @foreach ($images as $galleryImage)
+                            <figure data-gallery-group="{{ $eventType }}" @class(['wide' => $loop->parent->first && $loop->first])>
+                                <img src="{{ asset('storage/' . $galleryImage->image) }}" alt="{{ $galleryImage->title }}">
+                                <figcaption>{{ $galleryImage->caption ?: $galleryImage->title }}</figcaption>
+                            </figure>
+                        @endforeach
+                    @endforeach
+                </div>
+            </section>
+        @endif
 
         <section class="events-section event-includes">
             <div class="section-heading">
@@ -274,7 +321,7 @@
 
     <footer class="site-footer">
         <div>
-            <img class="footer-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="footer-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
             <p>EVENTS &bull; DECOR &bull; FLORALS</p>
         </div>
         <div>
@@ -284,7 +331,7 @@
             <p>Location: Nairobi, Kenya</p>
         </div>
         <div>
-            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a></p>
+            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('shop') }}">Shop</a></p>
             <p>Instagram | TikTok | Facebook</p>
         </div>
     </footer>

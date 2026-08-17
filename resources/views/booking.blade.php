@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Book Joya Atelier event decor, floral design, balloon styling, backdrops, tablescapes, and complete event setup in advance.">
     <title>Book Your Event | Joya Atelier</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -12,13 +13,14 @@
 <body>
     <header class="shop-header">
         <a class="brand shop-brand" href="{{ route('home') }}" aria-label="Joya Atelier home">
-            <img class="brand-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="brand-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
         </a>
         <nav class="shop-nav" aria-label="Booking page navigation">
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('events') }}">Events</a>
             <a href="{{ route('flowers') }}">Flowers</a>
+            <a href="{{ route('shop') }}">Shop</a>
             <a href="#booking-form">Booking Form</a>
         </nav>
         <a class="header-cta" href="#booking-form">Book Now</a>
@@ -154,14 +156,11 @@
                         <input type="text" name="theme" placeholder="Blush, ivory, gold, black and silver">
                     </label>
                     <label>
-                        <span>Budget Range</span>
-                        <select name="budget_range">
-                            <option>Still deciding</option>
-                            <option>Below KSh 20,000</option>
-                            <option>KSh 20,000 - 50,000</option>
-                            <option>KSh 50,000 - 100,000</option>
-                            <option>KSh 100,000+</option>
-                        </select>
+                        <span>Budget</span>
+                        <span class="money-input">
+                            <span>KSh</span>
+                            <input type="number" name="budget_range" min="0" step="1" inputmode="numeric" placeholder="Type your budget">
+                        </span>
                     </label>
                 </div>
                 <fieldset>
@@ -192,7 +191,7 @@
 
     <footer class="site-footer">
         <div>
-            <img class="footer-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="footer-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
             <p>EVENTS &bull; DECOR &bull; FLORALS</p>
         </div>
         <div>
@@ -202,7 +201,7 @@
             <p>Location: Nairobi, Kenya</p>
         </div>
         <div>
-            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a></p>
+            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('shop') }}">Shop</a></p>
             <p>Instagram | TikTok | Facebook</p>
         </div>
     </footer>

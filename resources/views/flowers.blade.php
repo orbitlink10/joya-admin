@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Shop Joya Atelier flower designs including fresh roses, sunflowers, tulips, handcrafted fuzzy-wire bouquets, framed flowers, and gift baskets.">
     <title>Flowers | Joya Atelier</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -12,13 +13,14 @@
 <body>
     <header class="shop-header">
         <a class="brand shop-brand" href="{{ route('home') }}" aria-label="Joya Atelier home">
-            <img class="brand-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="brand-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
         </a>
         <nav class="shop-nav" aria-label="Flower page navigation">
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('events') }}">Events</a>
-            <a href="#real-flowers">Real Flowers</a>
+            <a href="{{ route('shop') }}">Shop</a>
+            <a href="#real-flowers">Fresh Flowers</a>
             <a href="#fuzzy-flowers">Fuzzy Wire</a>
             <a href="#ribbon-flowers">Ribbon Tape</a>
             <a href="#custom-order">Custom Order</a>
@@ -44,14 +46,44 @@
             <img src="{{ asset('images/flowers/pink-fuzzy-roses.jpg') }}" alt="Pink handcrafted fuzzy-wire rose bouquet with pearl details">
         </section>
 
+        @if ($products->isNotEmpty())
+            <section id="available-products" class="shop-section">
+                <div class="section-heading">
+                    <p class="eyebrow dark">Available Now</p>
+                    <h2>Products managed from your admin dashboard.</h2>
+                    <p class="section-intro">
+                        These products are controlled from the admin side, so updates to images, prices, and descriptions can go live without editing code.
+                    </p>
+                </div>
+                <div class="product-grid">
+                    @foreach ($products as $product)
+                        <article class="product-card">
+                            @if ($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                            @endif
+                            <div>
+                                <span>{{ $product->productCategory?->name ?: $product->category ?: 'Joya Atelier' }}</span>
+                                <h3>{{ $product->name }}</h3>
+                                <p>{{ $product->description }}</p>
+                                @if ($product->price)
+                                    <p><strong>KSh {{ number_format($product->price, 2) }}</strong></p>
+                                @endif
+                                <a href="https://wa.me/254746761556?text={{ rawurlencode('Hello Joya Atelier, I would like to order ' . $product->name . '.') }}">Order This Item</a>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         <section id="real-flowers" class="shop-section">
             <div class="section-heading">
-                <p class="eyebrow dark">Real Flowers</p>
+                <p class="eyebrow dark">Fresh Flowers</p>
                 <h2>Fresh flowers for beautiful moments.</h2>
             </div>
             <div class="product-grid">
                 <article class="product-card">
-                    <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=85" alt="Fresh rose bouquet">
+                    <img src="{{ asset('images/flowers/classic-rose-bouquet.avif') }}" alt="Fresh pink rose bouquet in a glass vase">
                     <div>
                         <span>Fresh Roses</span>
                         <h3>Classic Rose Bouquet</h3>
@@ -69,7 +101,7 @@
                     </div>
                 </article>
                 <article class="product-card">
-                    <img src="https://images.unsplash.com/photo-1456415333674-42b11b9f5b7b?auto=format&fit=crop&w=900&q=85" alt="Fresh colorful tulip bouquet">
+                    <img src="{{ asset('images/flowers/colorful-tulip-wrap.jpg') }}" alt="Soft pink tulip bouquet wrapped in pastel paper">
                     <div>
                         <span>Fresh Tulips</span>
                         <h3>Colorful Tulip Wrap</h3>
@@ -247,7 +279,7 @@
                 <h2>Want a custom bouquet?</h2>
                 <p>
                     Send the flower type, colors, date, delivery location, and inspiration photo.
-                    We can prepare real flowers, fuzzy-wire keepsakes, baskets, framed gifts, or mixed designs.
+                    We can prepare fresh flowers, fuzzy-wire keepsakes, baskets, framed gifts, or mixed designs.
                 </p>
                 <a class="whatsapp-panel-link" href="https://wa.me/254746761556?text=Hello%20Joya%20Atelier%2C%20I%20would%20like%20a%20custom%20flower%20order.">Start on WhatsApp</a>
             </div>
@@ -264,7 +296,7 @@
                 <label>
                     <span>Flower Type</span>
                     <select name="flower_type">
-                        <option>Real flowers</option>
+                        <option>Fresh flowers</option>
                         <option>Fuzzy-wire flowers</option>
                         <option>Ribbon-tape flowers</option>
                         <option>Mixed / custom design</option>
@@ -276,14 +308,11 @@
                         <input type="date" name="delivery_date">
                     </label>
                     <label>
-                        <span>Budget Range</span>
-                        <select name="budget">
-                            <option>Still deciding</option>
-                            <option>Below KSh 2,000</option>
-                            <option>KSh 2,000 - 5,000</option>
-                            <option>KSh 5,000 - 10,000</option>
-                            <option>KSh 10,000+</option>
-                        </select>
+                        <span>Budget</span>
+                        <span class="money-input">
+                            <span>KSh</span>
+                            <input type="number" name="budget" min="0" step="1" inputmode="numeric" placeholder="Type your budget">
+                        </span>
                     </label>
                 </div>
                 <label>
@@ -309,7 +338,7 @@
 
     <footer class="site-footer">
         <div>
-            <img class="footer-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="footer-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
             <p>EVENTS &bull; DECOR &bull; FLORALS</p>
         </div>
         <div>
@@ -319,7 +348,7 @@
             <p>Location: Nairobi, Kenya</p>
         </div>
         <div>
-            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="#custom-order">Custom Order</a></p>
+            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('shop') }}">Shop</a> | <a href="#custom-order">Custom Order</a></p>
             <p>Instagram | TikTok | Facebook</p>
         </div>
     </footer>

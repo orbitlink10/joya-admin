@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Joya Atelier creates luxury event decor, fresh flowers, and complete styling for celebrations, gifting, weddings, corporate events, and galas.">
     <title>Joya Atelier | Events, Florals & Styling</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -12,12 +13,13 @@
 <body class="image-hero-page">
     <header class="shop-header home-top-menu">
         <a class="brand shop-brand" href="{{ route('home') }}" aria-label="Joya Atelier home">
-            <img class="brand-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="brand-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
         </a>
         <nav class="shop-nav" aria-label="Primary navigation">
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('events') }}">Events</a>
             <a href="{{ route('flowers') }}">Flowers</a>
+            <a href="{{ route('shop') }}">Shop</a>
             <a href="{{ route('about') }}">About Us</a>
             <a href="{{ route('booking') }}">Booking</a>
         </nav>
@@ -54,7 +56,7 @@
             </div>
             <div class="hero-action-bar" aria-label="Joya Atelier quick actions">
                 <a class="primary-btn" href="{{ route('booking') }}">Book Your Event</a>
-                <a class="secondary-btn" href="{{ route('flowers') }}">Shop Flowers</a>
+                <a class="secondary-btn" href="{{ route('shop') }}">Shop Now</a>
             </div>
             <div class="hero-slide-dots" aria-label="Hero slideshow progress">
                 <span class="is-active"></span>
@@ -100,35 +102,68 @@
             </div>
         </section>
 
+        @if ($services->isNotEmpty())
+            <section id="services" class="content-section why-section">
+                <div class="section-heading">
+                    <p class="eyebrow dark">Services</p>
+                    <h2>Event styling and floral services from the Joya Atelier admin.</h2>
+                </div>
+                <div class="why-grid">
+                    @foreach ($services as $service)
+                        <article>
+                            @if ($service->image)
+                                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}">
+                            @endif
+                            <h3>{{ $service->title }}</h3>
+                            <p>{{ $service->description }}</p>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         <section id="flowers" class="content-section flower-section">
             <div class="section-heading">
                 <p class="eyebrow dark">Featured Flowers</p>
                 <h2>Flowers For Every Beautiful Moment</h2>
             </div>
             <div class="flower-grid">
-                <article>
-                    <img src="{{ asset('images/flowers/pink-fuzzy-roses.jpg') }}" alt="Pink handcrafted fuzzy-wire bouquet">
-                    <h3>Blush Pearl Fuzzy Bouquet</h3>
-                    <p>Handcrafted keepsake</p>
-                </article>
-                <article>
-                    <img src="{{ asset('images/flowers/basket-fuzzy-flowers.jpeg') }}" alt="Handcrafted basket with fuzzy-wire flowers">
-                    <h3>Rose & Lily Basket</h3>
-                    <p>Gift arrangement</p>
-                </article>
-                <article>
-                    <img src="{{ asset('images/ribbon/red-pink-ribbon-roses.webp') }}" alt="Red and pink ribbon rose bouquet">
-                    <h3>Red & Pink Ribbon Roses</h3>
-                    <p>Ribbon tape bouquet</p>
-                </article>
-                <article>
-                    <img src="{{ asset('images/flowers/fuzzy-sunflower.jpg') }}" alt="Handcrafted fuzzy-wire sunflower bouquet">
-                    <h3>Sunflower Keepsake</h3>
-                    <p>Bright handmade gift</p>
-                </article>
+                @forelse ($featuredProducts as $product)
+                    <article>
+                        @if ($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        @endif
+                        <h3>{{ $product->name }}</h3>
+                        <p>{{ $product->productCategory?->name ?: $product->category ?: 'Joya Atelier product' }}</p>
+                        @if ($product->price)
+                            <p>KSh {{ number_format($product->price, 2) }}</p>
+                        @endif
+                    </article>
+                @empty
+                    <article>
+                        <img src="{{ asset('images/flowers/pink-fuzzy-roses.jpg') }}" alt="Pink handcrafted fuzzy-wire bouquet">
+                        <h3>Blush Pearl Fuzzy Bouquet</h3>
+                        <p>Handcrafted keepsake</p>
+                    </article>
+                    <article>
+                        <img src="{{ asset('images/flowers/basket-fuzzy-flowers.jpeg') }}" alt="Handcrafted basket with fuzzy-wire flowers">
+                        <h3>Rose & Lily Basket</h3>
+                        <p>Gift arrangement</p>
+                    </article>
+                    <article>
+                        <img src="{{ asset('images/ribbon/red-pink-ribbon-roses.webp') }}" alt="Red and pink ribbon rose bouquet">
+                        <h3>Red & Pink Ribbon Roses</h3>
+                        <p>Ribbon tape bouquet</p>
+                    </article>
+                    <article>
+                        <img src="{{ asset('images/flowers/fuzzy-sunflower.jpg') }}" alt="Handcrafted fuzzy-wire sunflower bouquet">
+                        <h3>Sunflower Keepsake</h3>
+                        <p>Bright handmade gift</p>
+                    </article>
+                @endforelse
             </div>
             <div class="section-action">
-                <a class="primary-btn" href="{{ route('flowers') }}">Shop All Flowers</a>
+                <a class="primary-btn" href="{{ route('shop') }}">Shop All Products</a>
                 <p>Same-day delivery can be added for selected service areas.</p>
             </div>
         </section>
@@ -180,23 +215,52 @@
                 <h2>Our Clients Say It Best</h2>
             </div>
             <div class="testimonial-grid">
-                <blockquote>
-                    <span>5 stars</span>
-                    "The decor was absolutely beautiful. Everything looked even better than I imagined."
-                    <cite>- Sarah, Birthday Celebration</cite>
-                </blockquote>
-                <blockquote>
-                    <span>5 stars</span>
-                    "The flowers, backdrop, and table details worked together perfectly."
-                    <cite>- Nia, Bridal Shower</cite>
-                </blockquote>
-                <blockquote>
-                    <span>5 stars</span>
-                    "Elegant, professional, and calm from planning to setup."
-                    <cite>- Amina, Graduation Party</cite>
-                </blockquote>
+                @forelse ($testimonials as $testimonial)
+                    <blockquote>
+                        <span>{{ $testimonial->rating }} stars</span>
+                        "{{ $testimonial->message }}"
+                        <cite>- {{ $testimonial->client_name }}{{ $testimonial->occasion ? ', ' . $testimonial->occasion : '' }}</cite>
+                    </blockquote>
+                @empty
+                    <blockquote>
+                        <span>5 stars</span>
+                        "The decor was absolutely beautiful. Everything looked even better than I imagined."
+                        <cite>- Sarah, Birthday Celebration</cite>
+                    </blockquote>
+                    <blockquote>
+                        <span>5 stars</span>
+                        "The flowers, backdrop, and table details worked together perfectly."
+                        <cite>- Nia, Bridal Shower</cite>
+                    </blockquote>
+                    <blockquote>
+                        <span>5 stars</span>
+                        "Elegant, professional, and calm from planning to setup."
+                        <cite>- Amina, Graduation Party</cite>
+                    </blockquote>
+                @endforelse
             </div>
         </section>
+
+        @if ($articles->isNotEmpty())
+            <section class="content-section">
+                <div class="section-heading">
+                    <p class="eyebrow dark">Journal</p>
+                    <h2>Latest advice and inspiration from Joya Atelier.</h2>
+                </div>
+                <div class="why-grid">
+                    @foreach ($articles as $article)
+                        <article>
+                            @if ($article->featured_image)
+                                <img src="{{ asset('storage/' . $article->featured_image) }}" alt="{{ $article->title }}">
+                            @endif
+                            <h3>{{ $article->title }}</h3>
+                            <p>{{ $article->excerpt }}</p>
+                            <a href="{{ route('blog.show', $article) }}">Read Article</a>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
 
         <section id="booking" class="contact-section">
             <div class="contact-copy">
@@ -216,7 +280,7 @@
                 </a>
                 <a href="{{ route('flowers') }}">
                     <span>02</span>
-                    <strong>Shop Flowers</strong>
+                    <strong>Shop Products</strong>
                     <em>Explore fresh bouquets, handmade flowers, ribbon designs, and custom gift pieces.</em>
                 </a>
                 <a href="https://wa.me/254746761556?text=Hello%20Joya%20Atelier%2C%20I%20would%20like%20to%20ask%20about%20an%20event%20or%20flower%20order.">
@@ -241,7 +305,7 @@
 
     <footer class="site-footer">
         <div>
-            <img class="footer-logo" src="{{ asset('images/brand/joya-logo-transparent-dark-text.png') }}" alt="Joya Atelier logo">
+            <img class="footer-logo" src="{{ $siteLogoUrl }}" alt="Joya Atelier logo">
             <p>EVENTS &bull; DECOR &bull; FLORALS</p>
         </div>
         <div>
@@ -251,7 +315,7 @@
             <p>Location: Nairobi, Kenya</p>
         </div>
         <div>
-            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('home') }}#work">Gallery</a> | <a href="{{ route('booking') }}">Booking</a></p>
+            <p><a href="{{ route('home') }}">Home</a> | <a href="{{ route('about') }}">About</a> | <a href="{{ route('events') }}">Events</a> | <a href="{{ route('flowers') }}">Flowers</a> | <a href="{{ route('shop') }}">Shop</a> | <a href="{{ route('home') }}#work">Gallery</a> | <a href="{{ route('booking') }}">Booking</a></p>
             <p>Instagram | TikTok | Facebook</p>
         </div>
         <p class="footer-copyright">
