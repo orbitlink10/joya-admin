@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Articles\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -39,6 +40,15 @@ class ArticlesTable
                 //
             ])
             ->recordActions([
+                Action::make('review')
+                    ->label('Review')
+                    ->icon('heroicon-o-eye')
+                    ->url(
+                        fn ($record): string => $record->is_published
+                            ? route('blog.show', $record)
+                            : route('admin.articles.review', $record),
+                        shouldOpenInNewTab: true,
+                    ),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
